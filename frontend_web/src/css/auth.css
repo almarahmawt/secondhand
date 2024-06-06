@@ -1,0 +1,31 @@
+.image-login {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+}
+
+.formAuth {
+    margin: 10vh 10vw;
+}
+
+.formInput {
+    border-radius: 16px;
+}
+
+.btnPrimary {
+    border-radius: 16px;
+    border: 0px;
+    color: white;
+    background-color: #4b1979;
+    padding: 12px 24px;
+}
+
+.btnPrimary:hover {
+    background-color: #3d1563;
+}
+
+@media screen and (max-width: 991px) {
+    .cover-image {
+        display: none;
+    }
+}
