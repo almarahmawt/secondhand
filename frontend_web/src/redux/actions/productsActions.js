@@ -81,20 +81,14 @@ export const addProduct = (params) => async (dispatch) => {
         formdata.append("price", params.price);
         formdata.append("category", params.category);
         formdata.append("description", params.description);
-<<<<<<< HEAD
-=======
         formdata.append("picture", params.file);
->>>>>>> 96a4b3ce5cfa26e4ce39dec97f7ee8fd2fa112b7
 
         for (let i = 0; i < params.file.length; i++) {
             formdata.append("picture", params.file[i]);
         }
 
-<<<<<<< HEAD
-=======
         console.log(formdata)
 
->>>>>>> 96a4b3ce5cfa26e4ce39dec97f7ee8fd2fa112b7
         const response = await fetch("http://localhost:8000/api/v1/product", {
             method: "POST",
             headers: {
