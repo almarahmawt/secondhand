@@ -9,7 +9,6 @@ import { FiSearch } from "react-icons/fi";
 import ButtonJual from "../ButtonJual";
 import Footer from "../Footer";
 import { Container } from "react-bootstrap";
-import { getOfferbyIDProduct } from "../../redux/actions/offeringActions";
 
 export default function LandingPage() {
   const dispatch = useDispatch();

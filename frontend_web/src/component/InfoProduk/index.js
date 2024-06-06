@@ -22,6 +22,7 @@ export default function InfoProduk() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { product_name, price, category, description, file };
+    console.log(data)
     dispatch(addProduct(data));
   };
 

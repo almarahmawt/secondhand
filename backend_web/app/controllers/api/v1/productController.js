@@ -23,34 +23,50 @@ module.exports = {
       const token = bearerToken.split("Bearer ")[1];
       const tokenPayload = verifyToken(token);
 
+      
+      console.log(req.files.length)
+
       const imageUrlList = [];
       for (let i = 0; i < req.files.length; i++) {
         const fileBase64 = req.files[i].buffer.toString("base64");
         const file = `data:${req.files[i].mimetype};base64,${fileBase64}`;
-        const result = await cloudinary.uploader.upload(file);
-        imageUrlList.push(result.url);
+        try{
+          const result = await cloudinary.uploader.upload(file, {resource_type: "image"});        
+          console.log("cloudinary")   
+          console.log(result)
+          imageUrlList.push(result.url);
+        }catch(err){
+          console.log(err)
+        }
+       
       }
 
-      if (imageUrlList.length === 1)
-        (image_1 = imageUrlList[0]),
-          (image_2 = null),
-          (image_3 = null),
-          (image_4 = null);
-      if (imageUrlList.length === 2)
-        (image_1 = imageUrlList[0]),
-          (image_2 = imageUrlList[1]),
-          (image_3 = null),
-          (image_4 = null);
-      if (imageUrlList.length === 3)
-        (image_1 = imageUrlList[0]),
-          (image_2 = imageUrlList[1]),
-          (image_3 = imageUrlList[2]),
-          (image_4 = null);
-      if (imageUrlList.length === 4)
-        (image_1 = imageUrlList[0]),
-          (image_2 = imageUrlList[1]),
-          (image_3 = imageUrlList[2]),
-          (image_4 = imageUrlList[3]);
+      if (imageUrlList) {
+
+        console.log("imageUrlList")
+        console.log(imageUrlList)
+
+        if (imageUrlList.length === 1)
+          (image_1 = imageUrlList[0]),
+            (image_2 = null),
+            (image_3 = null),
+            (image_4 = null);
+        if (imageUrlList.length === 2)
+          (image_1 = imageUrlList[0]),
+            (image_2 = imageUrlList[1]),
+            (image_3 = null),
+            (image_4 = null);
+        if (imageUrlList.length === 3)
+          (image_1 = imageUrlList[0]),
+            (image_2 = imageUrlList[1]),
+            (image_3 = imageUrlList[2]),
+            (image_4 = null);
+        if (imageUrlList.length === 4)
+          (image_1 = imageUrlList[0]),
+            (image_2 = imageUrlList[1]),
+            (image_3 = imageUrlList[2]),
+            (image_4 = imageUrlList[3]);
+      }
 
       const createArgs = {
         id_seller: tokenPayload.id,
@@ -63,6 +79,8 @@ module.exports = {
         image_3,
         image_4,
       };
+
+      console.log(createArgs)
 
       productService.create(createArgs).then((products) => {
         res.status(201).json({

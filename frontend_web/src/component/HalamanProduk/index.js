@@ -172,24 +172,9 @@ console.log(detailProduct)
     imagepreview.push(detailProduct.image_4);
   }
 
-  console.log("poto");
+  console.log(offering);
+  
 
-  // console.log(offering[0].id_buyer)
-  // console.log(offering[0])
-  // console.log(user + "ini")
-  // for (let i = 0; i < offering.length; i++) {
-  //   if (offering[i].id_buyer === user.id) {
-  //     // document.getElementById("suksesnego").prop.add("disabled");
-  //     console.log("adasama")
-  //   } else {
-  //     console.log("tada")
-  //   }
-  // }
-  // if (offering) {
-  //   offering.forEach((data) => {
-  //     console.log(data)
-  //   })
-  // }
   let cekoffer = [];
   if (offering && user) {
     cekoffer = offering.find((x) => x.id_buyer === user.id);
