@@ -98,7 +98,7 @@ const Regis = () => {
                 >
                   Masuk
                 </Button>
-                <div className="d-flex justify-content-center">
+                {/* <div className="d-flex justify-content-center">
                   <Button
                     variant="success"
                     className="mb-3"
@@ -120,7 +120,7 @@ const Regis = () => {
                       <p>Masuk dengan Google</p>
                     </div>
                   </Button>
-                </div>
+                </div> */}
                 <div className="mt-3 d-flex justify-content-center">
                   <Stack direction="horizontal" gap={1}>
                     <p>Belum punya akun?</p>

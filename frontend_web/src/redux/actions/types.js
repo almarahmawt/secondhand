@@ -23,4 +23,5 @@ export const OFFERING_ERROR = "OFFERING_ERROR";
 export const GET_OFFER = "GET_OFFER";
 export const GET_ALL_OFFERING = "GET_ALL_OFFERING";
 export const GET_ALL_OFFER = "GET_ALL_OFFER";
+export const UPDATE_OFFERING = "UPDATE_OFFERING";
 

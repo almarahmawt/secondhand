@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Navigate, useNavigate } from "react-router-dom";
 import {
@@ -11,10 +11,11 @@ import profilpenjual from "../../images/profilpenjual.png";
 import nullprofil from "../../images/nullprofil.png";
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Button } from "react-bootstrap";
 import NavBar from "../NavBar";
 import { getProductById } from "../../redux/actions/productsActions";
 import { getUserbyID } from "../../redux/actions/authActions";
+import emailjs from 'emailjs-com';
 
 export default function HalamanProduk() {
   const { id } = useParams();
@@ -24,6 +25,7 @@ export default function HalamanProduk() {
   const { user } = useSelector((state) => state.auth);
   const { offering } = useSelector((state) => state.offering);
   const [modalShow, setModalShow] = React.useState(false);
+  const form = useRef();
 
   const [id_product, setIdProduct] = useState("");
   const [offering_price, setOfferingPrice] = useState("");
@@ -45,9 +47,12 @@ export default function HalamanProduk() {
     setOfferingPrice(event.target.value);
 };
 
-console.log(detailProduct)
+  function handleEdit() {
+    return navigate(`/edit-product/${id}`);
+  }
 
-  const handleSubmit = async () => {
+  function handleOfferProduct(e){            
+    e.preventDefault();   
     const data = {
       id_product: detailProduct.id,
       offering_price: offering_price,
@@ -56,94 +61,16 @@ console.log(detailProduct)
       price: detailProduct.price,
       image: detailProduct.image_1,
     };
-    console.log(data);
     dispatch(addOffering(data));
-    // window.location.reload();
-  };
-
-  function handleEdit() {
-    return navigate(`/edit-product/${id}`);
-  }
-
-  function ModalTawar(props) {
-    return (
-      <Modal
-        {...props}
-        size="sm"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            <h6>Masukkan Harga Tawarmu</h6>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p style={{ fontSize: "14px" }}>
-            Harga tawaranmu akan diketahui penjual, jika penjual cocok kamu akan
-            segera dihubungi penjual.
-          </p>
-          <div className="row p-1">
-            <div className="col-3 m-auto ">
-              <img
-                src={profilpenjual}
-                alt="profilpenjual"
-                style={{ widht: "48" }}
-              />
-            </div>
-            <div
-              className="col-9 "
-              style={{
-                fontSize: "14px",
-                lineHeight: "20px",
-                paddingTop: "18px",
-                paddingLeft: "5px",
-              }}
-            >
-              <b>{detailProduct.product_name}</b>
-              <p>Rp {detailProduct.price}</p>
-            </div>
-          </div>
-          <div>
-            <form>
-              <div className="mb-3">
-                <input
-                  type="number"
-                  value={id_product}
-                  onChange={() => setIdProduct(detailProduct.id)}
-                  hidden
-                />
-                <input
-                  type="number"
-                  value={no_hp}
-                  onChange={() => setNoHp(user.no_hp)}
-                  hidden
-                />
-                <label htmlFor="harga_tawar" className="form-label">
-                  Harga Tawar
-                </label>
-                <input
-                  type="number"
-                  className="form-control rounded "
-                  id="harga_tawar"
-                  placeholder="Rp 0,00"
-                  style={{ borderRadius: "16px" }}
-                  value={offering_price}
-                  onChange={handleInputOfferingPrice}
-                />
-              </div>
-              <button
-                type="button"
-                className="btn btn-custom me-3 mb-2 "
-                onClick={handleSubmit}
-              >
-                Kirim
-              </button>
-            </form>
-          </div>
-        </Modal.Body>
-      </Modal>
-    );
+    // emailjs.sendForm('service_rxozj69', 'template_ucwlhxx', form.current, 'SzEFdjirUS9chhpeP')
+    //         .then((result) => {
+    //             console.log(result.text);
+    //             if(result.text == "OK"){
+    //               dispatch(addOffering(data));
+    //             }
+    //         }, (error) => {
+    //             console.log(error.text);
+    //         });
   }
 
   if (localStorage.getItem("token") === null) {
@@ -171,9 +98,6 @@ console.log(detailProduct)
   if (detailProduct.image_4 !== null) {
     imagepreview.push(detailProduct.image_4);
   }
-
-  console.log(offering);
-  
 
   let cekoffer = [];
   if (offering && user) {
@@ -291,10 +215,69 @@ console.log(detailProduct)
                 </div>
               </div>
               <div>
-                <ModalTawar
+                {/* <ModalTawar
                   show={modalShow}
                   onHide={() => setModalShow(false)}
-                />
+                /> */}
+
+              <Modal show={modalShow} onHide={() => setModalShow(false)}>
+                      <form ref={form} onSubmit={handleOfferProduct}>
+                          <input type="hidden" id="name" name="name" value={user.name}/>
+                          <input type="hidden" id="email" name="email" value={user.email}/>
+                          <input type="hidden" id="no_hp" name="no_hp" value={user.no_hp}/>
+                          <input type="hidden" id="product" name="product" value={detailProduct.product_name}/>
+                          <input type="hidden" id="price" name="price" value={detailProduct.price}/>
+                          <Modal.Body style={{textAlign:'center'}}>    
+                              <p style={{ fontSize: "14px" }}>
+                                Harga tawaranmu akan diketahui penjual, jika penjual cocok kamu akan
+                                segera dihubungi penjual.
+                              </p>
+                              <div className="row p-1">
+                                <div className="col-6 m-auto" style={{textAlign:'right'}}>
+                                  <img
+                                    src={profilpenjual}
+                                    alt="profilpenjual"
+                                    style={{ widht: "48" }}
+                                  />
+                                </div>
+                                <div
+                                  className="col-6"
+                                  style={{
+                                    fontSize: "14px",
+                                    lineHeight: "20px",
+                                    paddingTop: "18px",
+                                    paddingLeft: "5px",
+                                    textAlign:'left'
+                                  }}
+                                >
+                                  <b>{detailProduct.product_name}</b>
+                                  <p>Rp {detailProduct.price}</p>
+                                </div>
+                              </div>  
+                              <div className="mb-3">
+                                <label htmlFor="offering_price" className="form-label">
+                                  Harga Tawar
+                                </label>
+                                <input
+                                  type="number"
+                                  className="form-control rounded "
+                                  id="offering_price"
+                                  name="offering_price"
+                                  placeholder="Rp 0,00"
+                                  style={{ borderRadius: "16px" }}
+                                  value={offering_price}
+                                  onChange={handleInputOfferingPrice}
+                                />
+                              </div>                    
+                          </Modal.Body>
+                          <Modal.Footer>
+                              <Button variant="secondary" onClick={() => setModalShow(false)}>
+                                  Close
+                              </Button>
+                              <button className="btn btn-primary" type="submit">OK</button>
+                          </Modal.Footer>                        
+                      </form>
+              </Modal>
               </div>
             </>
           )}

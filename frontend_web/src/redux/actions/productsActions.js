@@ -1,5 +1,12 @@
 import Swal from "sweetalert2";
-import { GET_ALL_PRODUCT, GET_PRODUCT, CREATE_PRODUCT, UPDATE_PRODUCT, CLEAR_PRODUCT, PRODUCT_ERROR, DELETE_PRODUCT } from "./types";
+import { 
+    GET_ALL_PRODUCT, 
+    GET_PRODUCT, 
+    CREATE_PRODUCT, 
+    UPDATE_PRODUCT, 
+    CLEAR_PRODUCT,
+    PRODUCT_ERROR, 
+    DELETE_PRODUCT } from "./types";
 
 const { REACT_APP_BACKEND } = process.env;
 

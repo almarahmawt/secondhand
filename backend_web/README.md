@@ -1,9 +1,12 @@
-# User Login
+# User admin login
 USERNAME    = renamuliani@gmail.com
 PASSWORD    = rena123
 
-# gmail
+# gmail website
 email = fiqricell15@gmail.com
+pass = Password**asdf
+
+email user testing = whoisaima989@gmail.com
 pass = Password**asdf
 
 pass cloudinary : Password**asdf1

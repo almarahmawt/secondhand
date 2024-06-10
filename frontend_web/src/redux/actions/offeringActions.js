@@ -3,7 +3,9 @@ import {
   CREATE_OFFERING,
   GET_ALL_OFFERING,
   OFFERING_ERROR,
-  GET_ALL_OFFER
+  GET_ALL_OFFER,
+  GET_OFFER,
+  UPDATE_OFFERING,
 } from "./types";
 import axios from "axios";
 
@@ -82,10 +84,51 @@ export const addOffering = (params) => async (dispatch) => {
   }
 };
 
+export const updateOffering = (params) => async (dispatch) => {
+  try {
+      const id = params.id;
+      const status = params.status;
+
+      const response = await fetch(`http://localhost:8000/api/v1/product/offered/update/${id}/${status}`, {
+          method: "PUT",
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+      });
+
+      const data = await response.json();
+
+      dispatch({
+          type: UPDATE_OFFERING,
+          status: data.status,
+      });
+
+      Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Success",
+          showConfirmButton: false,
+          timer: 1500,
+      });
+  } catch (error) {
+      dispatch({
+          type: OFFERING_ERROR,
+          payload: error.response,
+      });
+
+      Swal.fire({
+          position: "center",
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500,
+      });
+  }
+};
+
 export const getOfferbyIDProduct = (params) => async (dispatch) => {
   try {
     const id = params.id;
-    console.log("iniii" + id);
     const response = await fetch(
       `http://localhost:8000/api/v1/products/offered/${id}`,
       {
@@ -98,9 +141,8 @@ export const getOfferbyIDProduct = (params) => async (dispatch) => {
     const data = await response.json();
     console.log("ini data" + JSON.stringify(data));
     dispatch({
-      type: GET_ALL_OFFERING,
-      offering: data,
-      status: "ID_PRODUCT",
+      type: GET_OFFER,
+      detailoffer: data,
     });
   } catch (error) {
     dispatch({

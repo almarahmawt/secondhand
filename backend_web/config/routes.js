@@ -108,7 +108,7 @@ apiRouter.delete(
 );
 // update offering
 apiRouter.put(
-  "/api/v1/product/offered/update/:id",
+  "/api/v1/product/offered/update/:id/:status",
   controllers.api.v1.penawaranController.updateOffering
 );
 
