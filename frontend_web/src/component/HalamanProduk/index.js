@@ -61,16 +61,15 @@ export default function HalamanProduk() {
       price: detailProduct.price,
       image: detailProduct.image_1,
     };
-    dispatch(addOffering(data));
-    // emailjs.sendForm('service_rxozj69', 'template_ucwlhxx', form.current, 'SzEFdjirUS9chhpeP')
-    //         .then((result) => {
-    //             console.log(result.text);
-    //             if(result.text == "OK"){
-    //               dispatch(addOffering(data));
-    //             }
-    //         }, (error) => {
-    //             console.log(error.text);
-    //         });
+    emailjs.sendForm('service_ebr17la', 'template_8eodpjv', form.current, 'RDYjpe7S1Pz1WRrCB')
+            .then((result) => {
+                console.log(result.text);
+                if(result.text == "OK"){
+                  dispatch(addOffering(data));
+                }
+            }, (error) => {
+                console.log(error.text);
+            });
   }
 
   if (localStorage.getItem("token") === null) {
@@ -190,27 +189,7 @@ export default function HalamanProduk() {
                           )}
                         </>
                       )}
-                    </div>
-                    {/* <div className="card">
-                      <div className="row m-2">
-                        <div className="col-2">
-                          <img
-                              src={nullprofil}
-                              alt="profilpenjual"
-                              style={{ width: "50px" }}
-                            />
-                        </div>
-                        <div className="col-10">
-                          {user.map((detailUser, index) => {(
-                              <>
-                                <h5>{detailUser.name}</h5>
-                                <h5>{detailUser.city}</h5>
-                              </>
-                            )}
-                          )}
-                        </div>
-                      </div>
-                    </div> */}
+                    </div>                    
                   </div>
                 </div>
               </div>
