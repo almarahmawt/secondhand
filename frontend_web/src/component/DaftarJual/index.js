@@ -141,7 +141,7 @@ console.log(user)
                     style={{ border: "1px solid rgba(0,0,0,.125)" }}
                   >
                     <a
-                      href="/halamanproduk"
+                      href={`/halamanproduk/${item.id}`}
                       className="text-decoration-none"
                       style={{ color: "black" }}
                     >

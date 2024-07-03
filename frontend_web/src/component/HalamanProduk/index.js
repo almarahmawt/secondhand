@@ -30,6 +30,9 @@ export default function HalamanProduk() {
   const [id_product, setIdProduct] = useState("");
   const [offering_price, setOfferingPrice] = useState("");
   const [no_hp, setNoHp] = useState("");
+  const [showDelete, setShowDelete] = useState(false);
+  const [showMessage, setShowMessage] = React.useState(false);
+  const [message, setMessage] = React.useState("");
 
   React.useEffect(() => {
     dispatch(getProductById(id));
@@ -44,11 +47,50 @@ export default function HalamanProduk() {
   }, [dispatch, id]);
 
   const handleInputOfferingPrice= (event) => {
-    setOfferingPrice(event.target.value);
-};
+      setOfferingPrice(event.target.value);
+  };
 
   function handleEdit() {
     return navigate(`/edit-product/${id}`);
+  }
+
+  const handleCloseMessage = () => {
+    setShowMessage(false);
+    return navigate(-1);
+    }
+
+  const handleCloseDelete = () => {
+    setShowDelete(false);
+    }
+
+  async function handleDeleteProduct (id) {
+    console.log("delete product to API")
+      const deleteproduct = await fetch(`http://localhost:8000/api/v1/product/destroy/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-type": "application/json",
+          },
+        });        
+      const res = await deleteproduct.json(); 
+      console.log(res.code)
+      if (res.code !== 200) {
+        setMessage("Penawaran Produk masih berjalan. Produk tidak bisa di hapus.");
+      } else {
+        setMessage("Produk berhasil di hapus.");
+      }
+      
+      setShowMessage(true);
+      setShowDelete(false);
+      }
+
+
+  function handleDelete(id) {
+    // return navigate(`/edit-product/${id}`);
+    console.log("Delete")
+    console.log(id)
+    setShowDelete(true);
+    
   }
 
   function handleOfferProduct(e){            
@@ -164,6 +206,13 @@ export default function HalamanProduk() {
                             {" "}
                             Edit
                           </button>
+                          <button
+                            className="btn btn-custom me-3 mb-2 "
+                            onClick={() => handleDelete(detailProduct.id)}
+                          >
+                            {" "}
+                            Delete
+                          </button>
                         </>
                       ) : (
                         <>
@@ -198,6 +247,32 @@ export default function HalamanProduk() {
                   show={modalShow}
                   onHide={() => setModalShow(false)}
                 /> */}
+
+              <Modal show={showDelete} onHide={handleCloseDelete}>
+                  <Modal.Body style={{textAlign:'center'}}>
+                      Anda yakin akan menghapus produk?                      
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseDelete}>
+                          Close
+                      </Button>
+                      <Button className="btnOutline me-2 px-3" data-bs-toggle="modal" 
+                          onClick={()=>handleDeleteProduct(id)}>
+                          OK
+                      </Button>
+                  </Modal.Footer>    
+              </Modal>
+
+              <Modal show={showMessage} onHide={handleCloseMessage}>
+                  <Modal.Body style={{textAlign:'center'}}>
+                      {message}                     
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseMessage}>
+                          Close
+                      </Button>
+                  </Modal.Footer>    
+              </Modal>
 
               <Modal show={modalShow} onHide={() => setModalShow(false)}>
                       <form ref={form} onSubmit={handleOfferProduct}>

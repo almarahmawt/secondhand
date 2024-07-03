@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 import emailjs from 'emailjs-com';
+import axios from "axios";
 
 import { getAllOffer, updateOffering } from "../../redux/actions/offeringActions";
 
@@ -70,7 +71,7 @@ export default function InfoPenawaran() {
         setDataUser(datauser); 
         }
 
-    function handleSendOffering(e){            
+    async function handleSendOffering(e){            
         e.preventDefault();      
         emailjs.sendForm('service_2fqkkkc', 'template_wi7g4vl', form.current, 'uE_vf4RW2-C-X4Shh')
             .then((result) => {
@@ -79,7 +80,7 @@ export default function InfoPenawaran() {
                     let statusOffer = "Terima"
                     let data = { id : activeOfferingID, status : statusOffer };
                     dispatch(updateOffering(data));
-                    // window.location.reload();
+                    // window.location.reload();                    
                 }
             }, (error) => {
                 console.log(error.text);

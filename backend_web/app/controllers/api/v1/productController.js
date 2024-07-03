@@ -332,12 +332,14 @@ module.exports = {
         .deleteProduct(req.params.id, tokenPayload.id)
         .then((product) => {
           res.status(200).json({
-            status: "Product successfully deleted",
+            status: "success",
+            code: 200
           });
         });
     } catch (error) {
       res.status(422).json({
         status: error.message,
+        code: 422
       });
     }
   },

@@ -3,8 +3,7 @@ import { CREATE_OFFERING, GET_ALL_OFFERING, GET_OFFER, OFFERING_ERROR, GET_ALL_O
 const initialState = {
   offering: [],
   status: [],
-  error: null,
-  detailOffer: []
+  error: null
 };
 
 const offeringReducer = (state = initialState, action) => {
@@ -34,7 +33,7 @@ const offeringReducer = (state = initialState, action) => {
     case GET_OFFER:
       return {
         ...state,
-        detailOffer: action.detailoffer,
+        offering: action.detailoffer,
       };
     case OFFERING_ERROR:
       return {
