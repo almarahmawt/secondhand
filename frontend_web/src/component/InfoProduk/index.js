@@ -113,7 +113,7 @@ export default function InfoProduk() {
               <label for="deskripsi" className="form-label">
                 Deskripsi<span style={{ color: "red" }}>*</span>
               </label>
-              <input
+              <textarea
                 type="text"
                 className="form-control"
                 id="deskripsi"
