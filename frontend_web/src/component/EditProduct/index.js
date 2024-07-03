@@ -25,6 +25,7 @@ export default function EditProduct() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState();
+  const [statusProduct, setStatusProduct] = useState("");
 
   const checkProductById = async () => {
     if (product_name === "") {
@@ -38,12 +39,13 @@ export default function EditProduct() {
       setCategory(result.category);
       setDescription(result.description);
       setFile(result.image_1);
+      setStatusProduct("available");
     }
   };
   checkProductById();
 
   const handleSubmit = async () => {
-    let data = { id, product_name, price, category, description };
+    let data = { id, product_name, price, category, description, statusProduct };
     if (file !== detailProduct.image_1) data = { ...data, file };
     dispatch(updateProduct(data));
     Swal.fire({

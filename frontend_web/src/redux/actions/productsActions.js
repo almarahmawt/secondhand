@@ -142,6 +142,8 @@ export const updateProduct = (params) => async (dispatch) => {
         formdata.append("price", params.price);
         formdata.append("category", params.category);
         formdata.append("description", params.description);
+        
+        formdata.append("status", params.statusProduct);
 
         // Upload new image
         if (params.file) {

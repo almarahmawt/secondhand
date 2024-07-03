@@ -114,8 +114,13 @@ export default function LandingPage() {
                         className="text-decoration-none"
                         style={{ fontsize: "14px" }}
                       >
-                        Rp {item.price}
-                      </p>
+                        Rp {item.price} 
+                        {item.status === "sold" ? (
+                          <p style={{backgroundColor:"red", padding:"5px", color: "white", marginTop:"1px", textAlign:"center"}}>Terjual</p>
+                        ) : (
+                          <></>
+                        )}
+                        </p>
                     </div>
                   </div>
                 </a>

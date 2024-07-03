@@ -7,8 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 import emailjs from 'emailjs-com';
-import axios from "axios";
 
+import {
+    updateProduct,
+    getProductById,
+  } from "../../redux/actions/productsActions";
 import { getAllOffer, updateOffering } from "../../redux/actions/offeringActions";
 
 export default function InfoPenawaran() {
@@ -16,6 +19,7 @@ export default function InfoPenawaran() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { offering } = useSelector((state) => state.offering);
+    const { status, detailProduct } = useSelector((state) => state.product);
     const [showTerima, setShowTerima] = useState(false);
     const [showTolak, setShowTolak] = useState(false);
     const [activeOfferingID, setActiveOfferingID] = useState(0);
@@ -54,7 +58,10 @@ export default function InfoPenawaran() {
         setDataUser(datauser); 
         }
     
-    async function handleShowTerima (offeringId, userID, offeringPrice, productPrice, productName) {
+    async function handleShowTerima (offeringId, userID, offeringPrice, productPrice, productName, productID) {
+        
+        dispatch(getProductById(productID));
+
         setShowTerima(true);
         setActiveOfferingID(offeringId);
         setActiveOfferingPrice(offeringPrice);
@@ -72,7 +79,19 @@ export default function InfoPenawaran() {
         }
 
     async function handleSendOffering(e){            
-        e.preventDefault();      
+        e.preventDefault();   
+        
+        console.log(detailProduct);
+        let file = detailProduct.image_1;        
+        let id = detailProduct.id;
+        let product_name = detailProduct.product_name;
+        let price = detailProduct.price;
+        let category = detailProduct.category;
+        let description = detailProduct.description ;
+        let statusProduct = "sold";
+        let dataProduk = { id, product_name, price, category, description, file, statusProduct };
+        dispatch(updateProduct(dataProduk));
+
         emailjs.sendForm('service_2fqkkkc', 'template_wi7g4vl', form.current, 'uE_vf4RW2-C-X4Shh')
             .then((result) => {
                 console.log(result.text);
@@ -132,17 +151,6 @@ export default function InfoPenawaran() {
                         {" "}
                         <img src={arrow} alt="" />
                     </a>
-                    {/* <Stack direction="horizontal" gap={3} className="infoPenjual mt-4">
-                        <img src={profilpenjual} alt="" className="imageSmall" />
-                        <div>
-                            <h5 className="my-auto" style={{fontSize: "14px", lineHeight: "24px"}}>
-                                Nama Pembeli
-                            </h5>
-                            <p className="my-auto" style={{fontSize: "14px", color: "#BABABA"}}>
-                                Kota
-                            </p>
-                        </div>
-                    </Stack> */}
                     <div className="mt-4" style={{padding: "5px"}}>
                         <h5 className="my-auto" style={{fontSize: "14px", lineHeight: "24px"}}>
                             Daftar Produkmu yang Ditawar
@@ -186,7 +194,7 @@ export default function InfoPenawaran() {
                                                     Tolak
                                                 </Button>
                                                 <Button className="btnPrimary px-5" data-bs-toggle="modal" 
-                                                    onClick={()=>handleShowTerima(produk.id, produk.id_buyer, produk.offering_price, produk.price, produk.product_name)}>
+                                                    onClick={()=>handleShowTerima(produk.id, produk.id_buyer, produk.offering_price, produk.price, produk.product_name, produk.id_product)}>
                                                     Terima
                                                 </Button>
                                             </div>

@@ -216,7 +216,7 @@ export default function HalamanProduk() {
                         </>
                       ) : (
                         <>
-                          {cekoffer === null || cekoffer === undefined ? (
+                          {cekoffer === null || cekoffer === undefined  && detailProduct.status !== 'sold' ? (
                             <>
                               <button
                                 className="btn btn-custom me-3 mb-2 "
