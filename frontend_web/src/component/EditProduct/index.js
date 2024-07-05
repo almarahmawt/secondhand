@@ -39,12 +39,12 @@ export default function EditProduct() {
       setCategory(result.category);
       setDescription(result.description);
       setFile(result.image_1);
-      setStatusProduct("available");
     }
   };
   checkProductById();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () => {    
+    setStatusProduct("available");
     let data = { id, product_name, price, category, description, statusProduct };
     if (file !== detailProduct.image_1) data = { ...data, file };
     dispatch(updateProduct(data));
@@ -54,6 +54,7 @@ export default function EditProduct() {
       showConfirmButton: false,
       timer: 1500,
     });
+    return <Navigate to="/" />;
   };
 
   if (status === "UPDATE_PRODUCT_SUCCESS") {

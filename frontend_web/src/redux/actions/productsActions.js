@@ -153,6 +153,8 @@ export const updateProduct = (params) => async (dispatch) => {
         } else {
             formdata.append("picture", "");
         }
+        
+        console.log(formdata)
 
         const response = await fetch(`http://localhost:8000/api/v1/product/update/${params.id}`, {
             method: "PUT",
