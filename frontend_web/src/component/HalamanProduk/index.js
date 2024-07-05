@@ -193,12 +193,11 @@ export default function HalamanProduk() {
                       <p style={{ fontsize: "14px" }}>
                         Rp {detailProduct.price}
                       </p>
-                      {detailProduct.id_seller === user.id ? (
-                        <>
-                          {/* <button className="btn btn-custom me-3 mb-2 ">
-                            {" "}
-                            Terbitakan
-                          </button> */}
+                      {detailProduct.id_seller === user.id ?  (
+                        detailProduct.id_seller === user.id && detailProduct.status === 'sold' ? (
+                          <></>
+                        ) : (
+                          <>
                           <button
                             className="btn btn-custom me-3 mb-2 "
                             onClick={() => handleEdit(detailProduct.id)}
@@ -214,6 +213,7 @@ export default function HalamanProduk() {
                             Delete
                           </button>
                         </>
+                        )                        
                       ) : (
                         <>
                           {cekoffer === null || cekoffer === undefined  && detailProduct.status !== 'sold' ? (
